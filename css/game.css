@@ -1,0 +1,46 @@
+a {
+	text-decoration: none;
+}
+
+.dice,
+.dice-score {
+    border: 1px solid black;
+    margin: 0 25px;
+}
+.dice-score {
+    max-height: 50px;
+}
+.dice:hover {
+	cursor: pointer;
+}
+.dice.active {
+	border-color: red;
+}
+.hide {
+    display: none !important;
+}
+
+
+/*Table CSS*/
+#score-board {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#score-board td, #score-board th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#score-board tr:nth-child(even){background-color: #f2f2f2;}
+
+#score-board tr:hover {background-color: #ddd;}
+
+#score-board th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #05C4EB;
+    color: white;
+}

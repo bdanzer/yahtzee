@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Yahtzee</title>
+	<link rel="stylesheet" type="text/css" href="css/game.css">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="https://rawgit.com/bdanzer/danzerpress-layouts/master/danzerpress-layouts.css">
+</head>
+<body>
+	<div class="danzerpress-section">
+		<div class="danzerpress-wrap">
+			<h2 class="danzerpress-title" style="margin-bottom: 20px;">Yahtzee</h2>
+			
+			<h3 style="text-align: center;margin-bottom: 20px;">Current Round: <span id="current-round">1</span></h3>
+			<h4 style="text-align: center;margin-bottom: 20px;">Rolls: <span id="current-roll">0</span>/3</h4>
+			<div id="error-message">
+			</div>
+
+			<div id="dice-board" style="text-align: center;">
+			</div>
+
+			<div class="button-wrap" style="text-align: center;padding: 20px 0;">
+				<a id="button-shuffle" href="" class="danzerpress-button-modern danzerpress-button-left">Shuffle</a>
+			</div>
+
+			<div id="score">
+				<h2 class="danzerpress-title" style="margin-bottom: 20px;">Scoreboard</h2>
+				<table id="score-board" style="max-width: 900px; margin: auto;">
+					<tr>
+						<th>Upper Scores</th>
+					</tr>
+					<tr>
+						<td><img class="dice-score" src="./images/dice-1.png"> = 1</td>
+						<td id="keep-1" class="dice-keep"><a id="button-keep-1" href="" dice-number="1" class="danzerpress-button-modern keep">Keep</a></td>
+					</tr>
+					<tr>
+						<td><img class="dice-score" src="./images/dice-2.png"> = 2</td>
+						<td id="keep-2" class="dice-keep"><a id="button-keep-2" href="" dice-number="2" class="danzerpress-button-modern keep">Keep</a></td>
+					</tr>
+					<tr>
+						<td><img class="dice-score"  src="./images/dice-3.png"> = 2</td>
+						<td id="keep-3" class="dice-keep"><a id="button-keep-3" href="" dice-number="3" class="danzerpress-button-modern keep">Keep</a></td>
+					</tr>
+					<tr>
+						<td><img class="dice-score" src="./images/dice-4.png"> = 2</td>
+						<td id="keep-4" class="dice-keep"><a id="button-keep-4" href="" dice-number="4" class="danzerpress-button-modern keep">Keep</a></td>
+					</tr>
+					<tr>
+						<td><img class="dice-score" src="./images/dice-5.png"> = 2</td>
+						<td id="keep-5" class="dice-keep"><a id="button-keep-5" href="" dice-number="5" class="danzerpress-button-modern keep">Keep</a></td>
+					</tr>
+					<tr>
+						<td><img class="dice-score" src="./images/dice-6.png"> = 2</td>
+						<td id="keep-6" class="dice-keep"><a id="button-keep-6" href="" dice-number="6" class="danzerpress-button-modern keep">Keep</a></td>
+					</tr>
+					<tr style="text-align: center">
+						<td>Total</td>
+						<td><span id="total">0</span></td>
+					</tr>
+					<tr>
+						<th>Lower Scores</th>
+					</tr>
+					<tr>
+						<td>Three of a Kind</td>
+						<td id="keep-7" class="dice-keep"><a id="button-keep-7" href="" dice-number="6" class="danzerpress-button-modern keep">Keep</a></td>
+					</tr>
+					<tr>
+						<td>Four of a Kind</td>
+						<td id="keep-8" class="dice-keep"><a id="button-keep-8" href="" dice-number="6" class="danzerpress-button-modern keep">Keep</a></td>
+					</tr>
+					<tr>
+						<td>Full House</td>
+						<td id="keep-9" class="dice-keep"><a id="button-keep-9" href="" dice-number="6" class="danzerpress-button-modern keep">Keep</a></td>
+					</tr>
+					<tr>
+						<td>Small Straight</td>
+						<td id="keep-10" class="dice-keep"><a id="button-keep-10" href="" dice-number="6" class="danzerpress-button-modern keep">Keep</a></td>
+					</tr>
+					<tr>
+						<td>Large Straight</td>
+						<td id="keep-11" class="dice-keep"><a id="button-keep-11" href="" dice-number="6" class="danzerpress-button-modern keep">Keep</a></td>
+					</tr>
+					<tr>
+						<td>Yahtzee</td>
+						<td id="keep-12" class="dice-keep"><a id="button-keep-12" href="" dice-number="6" class="danzerpress-button-modern keep">Keep</a></td>
+					</tr>
+					<tr>
+						<td>Total Lower</td>
+						<td><span id="total-lower">0</span></td>
+					</tr>
+					<tr>
+						<td>Final Total</td>
+						<td><span id="final-total">0</span></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<script src="app/yahtzee.js"></script>
+	<script type="text/javascript">
+
+		var buttonShuffle = document.getElementById('button-shuffle');
+
+		Yahtzee.init();
+
+		buttonShuffle.addEventListener("click", function(e){
+			e.preventDefault();
+
+
+			//Check turns
+			if (Yahtzee.currentRoll <= 3) {
+
+				//Shuffle Dice
+				Yahtzee.shuffle();
+
+				if (Yahtzee.currentRoll == 3 + 1) {	
+					var newRound = document.getElementById('button-shuffle').innerHTML = 'New Round';
+					Yahtzee.currentRound = Yahtzee.currentRound + 1;
+				}
+
+			} else {
+				Yahtzee.reset();
+				console.log('currrent roll is higher than 3');
+			}
+
+		});
+
+	</script>
+</body>
+</html>
