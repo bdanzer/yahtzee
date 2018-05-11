@@ -1,1 +1,1 @@
-This was a project to learn more vanilla javascript. I do not own yahtzee and these files are free to use.
+This was a project to learn more vanilla javascript. I do not own yahtzee and these files are free to use.=
