@@ -4,7 +4,7 @@ Yahtzee = {
 	init : function() {
 
 		//Adding functionality when keeping
-		for (i = 1; i <= 12; i++) {
+		for (i = 1; i <= 13; i++) {
 			str = 'button-keep-' + i;
 			if (i < 7) {
 				document.getElementById(str).addEventListener('click', function(e) {
@@ -109,7 +109,21 @@ Yahtzee = {
 			}
 		}
 
-		//Check Yahtzee
+		//Small Straight 
+		if (diceId == 'button-keep-10') {
+			if (checkStraight(selectedDice.sort())) {
+				document.getElementById('keep-10').innerHTML = 25;
+			}
+		}
+
+		//Large Straight 
+		if (diceId == 'button-keep-11') {
+			if (checkLargeStraight(selectedDice.sort())) {
+				document.getElementById('keep-11').innerHTML = 35;
+			}
+		}
+
+		//Yahtzee
 		if (diceId == 'button-keep-12') {
 			var sameDice = [];
 			for(i = 0; i < currentDice.length; i++) {
@@ -121,6 +135,11 @@ Yahtzee = {
 				alert('YAHTZEE!');
 				document.getElementById('keep-12').innerHTML = 50;
 			}
+		}
+
+		//Chance
+		if (diceId == 'button-keep-13') {
+			document.getElementById('keep-13').innerHTML = total(currentDice);
 		}
 
 		Yahtzee.update();
@@ -137,27 +156,84 @@ Yahtzee = {
 		document.getElementById('current-roll').innerHTML = 0;
 	},
 	update : function() {
-		var elements = document.getElementsByClassName('dice-keep'),
-			x = 0;
+		var upperElements = document.getElementsByClassName('dice-keep-upper'),
+			lowerElements = document.getElementsByClassName('dice-keep-lower'),
+			upperTotal = document.getElementById('total-upper'),
+			lowerTotal = document.getElementById('total-lower'),
+			finalTotal = document.getElementById('final-total');
 
-		for (i = 0; i <= 5; i++) {
-			console.log(isNumeric(elements[i].innerHTML));
-			if (isNumeric((elements[i].innerHTML))) {
-				x = x + parseInt(elements[i].innerHTML);
-				console.log(x);
-			}
-		}
-		document.getElementById('total').innerHTML = x;
+		x = totalLower(upperElements);
+		upperTotal.innerHTML = x;
+		Total = x;
+
+		y = totalLower(lowerElements);
+		lowerTotal.innerHTML = y;
+
+		finalTotal.innerHTML = Total + y;
 	}
 }
 
 //Lib
+function checkStraight(array) {
+	count = 0;
+	if (parseInt(array[0]) === 1) {
+		smallStraight = [1,2,3,4];
+	} else if(parseInt(array[0]) === 2) {
+		smallStraight = [2,3,4,5];
+	} else {
+		smallStraight = [3,4,5,6];
+	}
+	
+	for(i=0;i<array.length;i++) {
+		if (parseInt(array[i]) === parseInt(smallStraight[i])) {
+			count++;
+			console.log(count);
+		}
+	}
+
+	if (count === 4) {
+		return true;
+	} else {
+		return false;
+	}
+}
+function checkLargeStraight(array) {
+	count = 0;
+	if (array[0] === 1) {
+		largeStraight = [1,2,3,4,5];
+	} else {
+		largeStraight = [2,3,4,5,6];
+	}
+
+	for(i=0;i<array.length;i++) {
+		if (parseInt(array[i]) === parseInt(largeStraight[i])) {
+			count++;
+			console.log(count);
+		}
+	}
+
+	if (count === 5) {
+		return true;
+	} else {
+		return false;
+	}
+}
 function total(array) {
 	x = 0;
 	for(i=0;i<array.length;i++) {
 		number = parseInt(array[i].getAttribute('dicenumber'));
 		x = x + number;
-		console.log(x);
+	}
+	return x;
+}
+function totalLower(array) {
+	x = 0;
+	for(i=0;i<array.length;i++) {
+		if (isNumeric(array[i].innerHTML)) {
+			number = parseInt(array[i].innerHTML);
+			x = x + number;
+			console.log(x);
+		}
 	}
 	return x;
 }
