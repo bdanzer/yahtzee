@@ -83,14 +83,17 @@ Yahtzee = {
 	keep : function(number, diceId) {
 		selectedDice = Yahtzee.getActiveDice();
 		currentDice = Yahtzee.getCurrentDice();
+		var kept = false;
 
 		if (selectedDice.includes(number)) {
+			kept = true;
 			document.getElementById('keep-' + number ).innerHTML = calculateArray(selectedDice, number);
 		}
 
 		//Three of a kind
 		if (diceId == 'button-keep-7') {
 			if (count(currentDice, 1) >= 3 || count(currentDice, 2) >= 3 || count(currentDice, 3) >= 3 || count(currentDice, 4) >= 3 || count(currentDice, 5) >= 3 || count(currentDice, 6) >= 3) {
+				kept = true;
 				document.getElementById('keep-7').innerHTML = total(currentDice);
 			}
 		}
@@ -98,6 +101,7 @@ Yahtzee = {
 		//Four of a kind
 		if (diceId == 'button-keep-8') {
 			if(count(currentDice, 1) >= 4 || count(currentDice, 2) >= 4 || count(currentDice, 3) >= 4 || count(currentDice, 4) >= 4 || count(currentDice, 5) >= 4 || count(currentDice, 6) >= 4) {
+				kept = true;
 				document.getElementById('keep-8').innerHTML = total(currentDice);
 			}
 		}
@@ -105,6 +109,7 @@ Yahtzee = {
 		//Full House
 		if (diceId == 'button-keep-9') {
 			if((count(currentDice, 1) == 3 || count(currentDice, 2) == 3 || count(currentDice, 3) == 3 || count(currentDice, 4) == 3 || count(currentDice, 5) == 3 || count(currentDice, 6) == 3) && (count(currentDice, 1) == 2 || count(currentDice, 2) == 2 || count(currentDice, 3) == 2 || count(currentDice, 4) == 2 || count(currentDice, 5) == 2 || count(currentDice, 6) == 2)) {
+				kept = true;
 				document.getElementById('keep-9').innerHTML = 25;
 			}
 		}
@@ -112,6 +117,7 @@ Yahtzee = {
 		//Small Straight 
 		if (diceId == 'button-keep-10') {
 			if (checkStraight(selectedDice.sort())) {
+				kept = true;
 				document.getElementById('keep-10').innerHTML = 25;
 			}
 		}
@@ -119,12 +125,16 @@ Yahtzee = {
 		//Large Straight 
 		if (diceId == 'button-keep-11') {
 			if (checkLargeStraight(selectedDice.sort())) {
+				kept = true;
 				document.getElementById('keep-11').innerHTML = 35;
 			}
 		}
 
 		//Yahtzee
 		if (diceId == 'button-keep-12') {
+			if (!currentDice.length) {
+				return alert('nice try');
+			}
 			var sameDice = [];
 			for(i = 0; i < currentDice.length; i++) {
 				if (currentDice[0] === currentDice[i]) {
@@ -132,6 +142,7 @@ Yahtzee = {
 				}
 			}
 			if (currentDice.length === sameDice.length) {
+				kept = true;
 				alert('YAHTZEE!');
 				document.getElementById('keep-12').innerHTML = 50;
 			}
@@ -139,11 +150,17 @@ Yahtzee = {
 
 		//Chance
 		if (diceId == 'button-keep-13') {
+			kept = true;
 			document.getElementById('keep-13').innerHTML = total(currentDice);
 		}
 
-		Yahtzee.update();
-		Yahtzee.reset();
+		if (kept === true) {
+			//Save Changes
+			Yahtzee.update();
+
+			//Reset for next round
+			Yahtzee.reset();
+		}
 
 	},
 	reset : function() {
@@ -154,6 +171,7 @@ Yahtzee = {
 		Yahtzee.currentDice = [];
 		Yahtzee.selectedDice = [];
 		document.getElementById('current-roll').innerHTML = 0;
+		document.getElementById('button-shuffle').classList.remove('isDisabled');
 	},
 	update : function() {
 		var upperElements = document.getElementsByClassName('dice-keep-upper'),

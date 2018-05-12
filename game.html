@@ -25,10 +25,9 @@
 
 			<div id="score">
 				<h2 class="danzerpress-title" style="margin-bottom: 20px;">Scoreboard</h2>
-				<table id="score-board" style="max-width: 900px; margin: auto;">
-					<tr>
-						<th>Upper Scores</th>
-					</tr>
+				<table class="score-board" style="max-width: 900px; margin: auto;">
+					
+					<h2 class="danzerpress-title">Upper Scores</h2>
 					<tr>
 						<td><img class="dice-score" src="./images/dice-1.png"> = 1</td>
 						<td id="keep-1" class="dice-keep-upper"><a id="button-keep-1" href="" dice-number="1" class="danzerpress-button-modern keep">Keep</a></td>
@@ -57,9 +56,9 @@
 						<td>Total</td>
 						<td><span id="total-upper">0</span></td>
 					</tr>
-					<tr>
-						<th>Lower Scores</th>
-					</tr>
+				</table>
+				<table class="score-board" style="max-width: 900px; margin: auto;">
+					<h2 class="danzerpress-title">Lower Scores</h2>
 					<tr>
 						<td>Three of a Kind</td>
 						<td id="keep-7" class="dice-keep-lower"><a id="button-keep-7" href="" dice-number="6" class="danzerpress-button-modern keep">Keep</a></td>
@@ -119,7 +118,11 @@
 				Yahtzee.shuffle();
 
 				if (Yahtzee.currentRoll == 3 + 1) {	
-					var newRound = document.getElementById('button-shuffle').innerHTML = 'New Round';
+					var newRound = document.getElementById('button-shuffle');
+
+					newRound.innerHTML = 'New Round';
+					newRound.classList.toggle('isDisabled');
+
 					Yahtzee.currentRound = Yahtzee.currentRound + 1;
 				}
 

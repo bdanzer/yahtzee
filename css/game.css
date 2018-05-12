@@ -1,5 +1,20 @@
+* {
+    font-family: sans-serif;
+}
+h2 {
+    text-align: center;
+}
 a {
 	text-decoration: none;
+}
+
+.isDisabled {
+  background: #9e9e9e !important;
+  border-color: #9e9e9e !important;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+  pointer-events: none;
 }
 
 .dice,
@@ -22,22 +37,22 @@ a {
 
 
 /*Table CSS*/
-#score-board {
+.score-board {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
 }
 
-#score-board td, #score-board th {
+.score-board td, .score-board th {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
-#score-board tr:nth-child(even){background-color: #f2f2f2;}
+.score-board tr:nth-child(even){background-color: #f2f2f2;}
 
-#score-board tr:hover {background-color: #ddd;}
+.score-board tr:hover {background-color: #ddd;}
 
-#score-board th {
+.score-board th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
